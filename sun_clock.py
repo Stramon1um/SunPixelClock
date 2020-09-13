@@ -13,6 +13,9 @@ num_pixels = 60
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.1, auto_write=False)
 
 OFF = (0,0,0)
+CIELO_AZZURRO = (15, 40, 50)
+CIELO_TRAMONTO = (80, 25, 9)
+CIELO_ALBA = (80, 25, 9)
 
 
 # LAT E LONG PER BOLZANO
@@ -61,32 +64,6 @@ def getDuration(then, now = datetime.now(), interval = "default"):
         'default': totalDuration()
     }[interval]
 
-# Example usage
-#then = datetime(2020, 8, 19, 14, 36, 15)
-#now = datetime.now()
-
-#print(getDuration(then)) # E.g. Time between dates: 7 years, 208 days, 21 hours, 19 minutes and 15 seconds
-#print(getDuration(then, now, 'years'))      # Prints duration in years
-#print(getDuration(then, now, 'days'))       #                    days
-#print(getDuration(then, now, 'hours'))      #                    hours
-#print(getDuration(then, now, 'minutes'))    #                    minutes
-#print(getDuration(then, now, 'seconds'))
-
-
-
-
-
-
-'''
-print("prova delta:\n")
-print ("ora alba -->", alba)
-print ("ora tramonto -->", tramonto)
-print ("ora attuale -->", adesso)
-print("delta orario sole in min -->", getDuration(alba, adesso, 'minutes'))
-print("delta orario luna in min -->", getDuration(tramonto, adesso, 'minutes'))
-print("delta luce totale in min -->", getDuration(alba, tramonto, 'minutes'))
-print("delta buio totale in min -->", delta_tot_luna)
-'''
 
 while True:
    # QUASI QUASI TANTO VALE DEFINIRE UN TOT_PIXEL TANTO è SEMPRE 30
@@ -99,6 +76,10 @@ while True:
 
    delta_tot_sole = getDuration(alba, tramonto, 'minutes')
    adesso = datetime.now(pytz.timezone('Europe/Rome'))
+   
+   # RESET LEDs
+   pixels.fill(OFF)
+   pixels.show()
 
    # CALCOLO A SECONDA DELLA FASE DEL GIORNO
    if (alba <= adesso <= tramonto):
@@ -109,22 +90,47 @@ while True:
       pixel_sole =  round(pixel_sole) - 1
       print ("perc sole -->", perc_sole)
       print("pixel sole -->", pixel_sole)
-      pixels.fill(OFF)
-      pixels.show()
+      
+      #pixels.fill(cielo)
+      #pixels.show()
       pixels[pixel_sole] = (255, 255, 0)
       pixels.show()
       
       # PER DECIDERE LA SFUMATURA IN BASE ALLA POSIZIONE DEL SOLE
       if (0<= pixel_sole <= 7):
+         
+         for i in range(tot_pixel_sole):
+            pixels[i] = CIELO_TRAMONTO
+            pixels.show()
+            
          pixels[pixel_sole] = (255, 102, 102)
+         pixels[pixel_sole + 1] = (255, 102, 102)
          pixels.show()
       if (8<= pixel_sole <= 15):
-         pixels[pixel_sole] = (255, 255, 102)
+         
+         for i in range(tot_pixel_sole):
+            pixels[i] = CIELO_AZZURRO
+            pixels.show()
+         
+         pixels[pixel_sole] = (255, 255, 0)
+         pixels[pixel_sole + 1] = (255, 255, 25)
+         pixels[pixel_sole - 1] = (255, 255, 25)
          pixels.show()   
       if (16<= pixel_sole <= 22):
+         
+         for i in range(tot_pixel_sole):
+            pixels[i] = CIELO_AZZURRO
+            pixels.show()
+            
          pixels[pixel_sole] = (255, 255, 102)
+         pixels[pixel_sole + 1] = (255, 255, 102)
          pixels.show()
       if (23<= pixel_sole <= 30):
+         
+         for i in range(tot_pixel_sole):
+            pixels[i] = CIELO_TRAMONTO
+            pixels.show()
+            
          pixels[pixel_sole] = (255, 128, 0)
          pixels[pixel_sole + 1] = (130, 30, 5)
          pixels[pixel_sole - 1] = (130, 30, 5)
@@ -213,13 +219,3 @@ while True:
             print("colore 4")
          '''
    time.sleep(300)
-  
-  
-  
-
-
-
-
-#ist = pytz.timezone('Europe/Rome')
-
-#print (datetime.now(ist))   #                    seconds
