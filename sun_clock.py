@@ -10,12 +10,14 @@ import neopixel
 pixel_pin = board.D12
 num_pixels = 60
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.1, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.15, auto_write=False)
 
 OFF = (0,0,0)
-CIELO_AZZURRO = (15, 40, 50)
-CIELO_TRAMONTO = (80, 25, 9)
+CIELO_AZZURRO = (10, 27, 33)
+CIELO_AZZURRO_1 = (15, 40, 50)
+CIELO_TRAMONTO = (30, 10, 3)
 CIELO_ALBA = (80, 25, 9)
+CIELO_LUNA = (0, 0, 7)
 
 
 # LAT E LONG PER BOLZANO
@@ -97,7 +99,7 @@ while True:
       pixels.show()
       
       # PER DECIDERE LA SFUMATURA IN BASE ALLA POSIZIONE DEL SOLE
-      if (0<= pixel_sole <= 7):
+      if (0<= pixel_sole <= 3):
          
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_TRAMONTO
@@ -106,34 +108,37 @@ while True:
          pixels[pixel_sole] = (255, 102, 102)
          pixels[pixel_sole + 1] = (255, 102, 102)
          pixels.show()
-      if (8<= pixel_sole <= 15):
-         
+      if (4<= pixel_sole <= 27):
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_AZZURRO
             pixels.show()
+            
          
          pixels[pixel_sole] = (255, 255, 0)
          pixels[pixel_sole + 1] = (255, 255, 25)
          pixels[pixel_sole - 1] = (255, 255, 25)
-         pixels.show()   
+         pixels.show()
+         '''   
       if (16<= pixel_sole <= 22):
          
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_AZZURRO
             pixels.show()
             
-         pixels[pixel_sole] = (255, 255, 102)
-         pixels[pixel_sole + 1] = (255, 255, 102)
+         pixels[pixel_sole] = (255, 255, 0)
+         pixels[pixel_sole + 1] = (255, 255, 30)
+         pixels[pixel_sole - 1] = (255, 255, 30)
          pixels.show()
-      if (23<= pixel_sole <= 30):
-         
+         '''
+      if (28<= pixel_sole <= 30):
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_TRAMONTO
             pixels.show()
             
-         pixels[pixel_sole] = (255, 128, 0)
-         pixels[pixel_sole + 1] = (130, 30, 5)
-         pixels[pixel_sole - 1] = (130, 30, 5)
+         
+         pixels[pixel_sole] = (255, 0, 0)
+         pixels[pixel_sole + 1] = (245, 10, 0)
+         pixels[pixel_sole - 1] = (245, 10, 0)
          pixels.show()
 
    else:
@@ -146,9 +151,14 @@ while True:
       fase_luna = moon.phase(datetime.now())
       print("pixel luna -->", pixel_luna)
       print ("perc luna -->", perc_luna)
-      pixels.fill(OFF)
-      pixels.show()
       
+      '''
+      #pixels.fill(OFF)
+      for i in range(tot_pixel_luna):
+            pixels[i+30] = CIELO_LUNA
+            pixels.show()
+      pixels.show()
+      '''
    
    # Per la fase lunare
    # 0 .. 6.99 Luna Nuova
@@ -205,8 +215,8 @@ while True:
          '''
       if (21<= fase_luna <= 27.99):
          print("Ultimo Quarto")
-         pixels[pixel_luna] = (0, 0, 10)
-         pixels[pixel_luna + 1] = (0, 0, 50)
+         pixels[pixel_luna] = (10, 10, 50)
+         pixels[pixel_luna - 1] = (0, 0, 25)
          pixels.show()
          '''
          if (30<= pixel_luna <= 37):
