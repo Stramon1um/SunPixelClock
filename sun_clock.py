@@ -21,14 +21,14 @@ CIELO_TRAMONTO = (30, 10, 3)
 CIELO_ALBA = (80, 25, 9)
 CIELO_LUNA = (0, 0, 7)
 
-TRAMONTO_00 = (251, 145, 34)
-TRAMONTO_0 = (250, 124, 29)
-TRAMONTO_1 = (245, 105, 25)
-TRAMONTO_2 = (242, 85, 21)
-TRAMONTO_3 = (237, 66, 18)
-TRAMONTO_4 = (233, 48, 15)
+TRAMONTO_00 = (250, 90, 15)
+TRAMONTO_0 = (250, 70, 15)
+TRAMONTO_1 = (255, 40, 10)
+TRAMONTO_2 = (245, 70, 12)
+TRAMONTO_3 = (240, 65, 10)
+TRAMONTO_4 = (235, 48, 8)
 TRAMONTO_5 = (210, 33, 12)
-TRAMONTO_6 = (251, 148, 75)
+TRAMONTO_6 = (230, 148, 75)
 TRAMONTO_7 = (203, 120, 107)
 TRAMONTO_8 = (139, 104, 119)
 TRAMONTO_9 = (103, 82, 124)
@@ -38,7 +38,7 @@ TRAMONTO_12 = (14, 19, 90)
 TRAMONTO_13 = (0, 5, 71)
 TRAMONTO_14 = (0, 0, 51)
 TRAMONTO_15 = (0, 0, 40)
-TRAMONTO_16 = (0, 0, 20)
+TRAMONTO_16 = (0, 0, 15)
 
 # LAT E LONG PER BOLZANO
 city = LocationInfo("Rome", "Italy", "Europe/Rome", 46.489650, 11.331729)
@@ -109,21 +109,24 @@ while True:
       perc_sole = (delta_sole / delta_tot_sole) * 100
       perc_sole = round(perc_sole, 2)
       pixel_sole = (tot_pixel_sole * perc_sole) / 100
-      pixel_sole =  round(pixel_sole) - 1
+      pixel_sole =  round(pixel_sole)
       print ("perc sole -->", perc_sole)
       print("pixel sole -->", pixel_sole)
       
       #pixels.fill(cielo)
       #pixels.show()
-      pixels[pixel_sole] = (255, 255, 0)
-      pixels.show()
+      #pixels[pixel_sole] = (255, 255, 0)
+      #pixels.show()
+      
+      #pixel_sole = 28
+            
       
       # PER DECIDERE LA SFUMATURA IN BASE ALLA POSIZIONE DEL SOLE
       if (0<= pixel_sole <= 3):
          
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_TRAMONTO
-            pixels.show()
+            #pixels.show()
             
          pixels[pixel_sole] = (255, 102, 102)
          pixels[pixel_sole + 1] = (255, 102, 102)
@@ -135,7 +138,7 @@ while True:
 
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_AZZURRO
-            pixels.show()
+            #pixels.show()
             
          
          pixels[pixel_sole] = (255, 255, 0)
@@ -145,11 +148,11 @@ while True:
 
       if (10<= pixel_sole <= 20):
 
-         pixels.brightness = 0.3
+         pixels.brightness = 0.4
 
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_AZZURRO
-            pixels.show()
+            #pixels.show()
             
          
          pixels[pixel_sole] = (255, 255, 0)
@@ -159,11 +162,11 @@ while True:
 
       if (20<= pixel_sole <= 27):
 
-         pixels.brightness = 0.2
+         pixels.brightness = 0.25
 
          for i in range(tot_pixel_sole):
             pixels[i] = CIELO_AZZURRO
-            pixels.show()
+            #pixels.show()
             
          
          pixels[pixel_sole] = (255, 255, 0)
@@ -173,11 +176,11 @@ while True:
  
       if (pixel_sole == 28):
 
-         pixels.brightness = 0.15
+         pixels.brightness = 0.18
          
          for i in range(tot_pixel_sole):
             pixels[i] = TRAMONTO_16
-            pixels.show()
+            #pixels.show()
 
          pixels[pixel_sole] = TRAMONTO_1
          pixels[pixel_sole - 1] = TRAMONTO_2
@@ -196,50 +199,52 @@ while True:
          pixels[pixel_sole - 14] = TRAMONTO_15
          
          pixels[pixel_sole + 1] = TRAMONTO_0
-         pixels[pixel_sole + 2] = TRAMONTO_00
+         #pixels[pixel_sole + 2] = TRAMONTO_00
+         
+         pixels.show()
 
       if (pixel_sole == 29):
 
-         pixels.brightness = 0.125
+         pixels.brightness = 0.15
 
          for i in range(tot_pixel_sole):
             pixels[i] = TRAMONTO_16
-            pixels.show()
+            #pixels.show()
 
          pixels[pixel_sole] = TRAMONTO_4
          pixels[pixel_sole - 1] = TRAMONTO_5
          pixels[pixel_sole - 2] = TRAMONTO_6
-         pixels[pixel_sole - 3] = TRAMONTO_7
-         pixels[pixel_sole - 4] = TRAMONTO_8
-         pixels[pixel_sole - 5] = TRAMONTO_9
-         pixels[pixel_sole - 6] = TRAMONTO_10
-         pixels[pixel_sole - 7] = TRAMONTO_11
-         pixels[pixel_sole - 8] = TRAMONTO_12
-         pixels[pixel_sole - 9] = TRAMONTO_13
-         pixels[pixel_sole - 10] = TRAMONTO_14
-         pixels[pixel_sole - 11] = TRAMONTO_15
+         pixels[pixel_sole - 3] = TRAMONTO_9
+         pixels[pixel_sole - 4] = TRAMONTO_10
+         pixels[pixel_sole - 5] = TRAMONTO_11
+         pixels[pixel_sole - 6] = TRAMONTO_12
+         pixels[pixel_sole - 7] = TRAMONTO_13
+         pixels[pixel_sole - 8] = TRAMONTO_14
+         pixels[pixel_sole - 9] = TRAMONTO_15
                  
          pixels[pixel_sole + 1] = TRAMONTO_0
+         
+         pixels.show()
 
       if (pixel_sole == 30):
 
-         pixels.brightness = 0.10
+         pixels.brightness = 0.12
 
          for i in range(tot_pixel_sole):
             pixels[i] = TRAMONTO_16
-            pixels.show()
+            #pixels.show()
 
-         pixels[pixel_sole] = TRAMONTO_7
+         pixels[pixel_sole] = TRAMONTO_5
          pixels[pixel_sole - 1] = TRAMONTO_8
          pixels[pixel_sole - 2] = TRAMONTO_9
-         pixels[pixel_sole - 3] = TRAMONTO_10
-         pixels[pixel_sole - 4] = TRAMONTO_11
-         pixels[pixel_sole - 5] = TRAMONTO_12
-         pixels[pixel_sole - 6] = TRAMONTO_13
-         pixels[pixel_sole - 7] = TRAMONTO_14
-         pixels[pixel_sole - 8] = TRAMONTO_15
+         pixels[pixel_sole - 3] = TRAMONTO_11
+         pixels[pixel_sole - 4] = TRAMONTO_12
+         pixels[pixel_sole - 5] = TRAMONTO_13
+         pixels[pixel_sole - 6] = TRAMONTO_15
+         #pixels[pixel_sole - 7] = TRAMONTO_14
+         #pixels[pixel_sole - 8] = TRAMONTO_15
          
-            
+         pixels.show()
       
 
    else:
@@ -329,4 +334,4 @@ while True:
          if (53<= pixel_luna <= 0):
             print("colore 4")
          '''
-   time.sleep(300)
+   time.sleep(150)
