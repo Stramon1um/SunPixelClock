@@ -10,7 +10,7 @@ import neopixel
 pixel_pin = board.D12
 num_pixels = 60
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.15, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.15, auto_write=False,pixel_order=neopixel.RGB)
 
 # COLORI
 OFF = (0,0,0)
@@ -38,7 +38,7 @@ TRAMONTO_12 = (14, 19, 90)
 TRAMONTO_13 = (0, 5, 71)
 TRAMONTO_14 = (0, 0, 51)
 TRAMONTO_15 = (0, 0, 40)
-TRAMONTO_16 = (0, 0, 15)
+TRAMONTO_16 = (0, 0, 12)
 
 # LAT E LONG PER BOLZANO
 city = LocationInfo("Rome", "Italy", "Europe/Rome", 46.489650, 11.331729)
@@ -109,7 +109,7 @@ while True:
       perc_sole = (delta_sole / delta_tot_sole) * 100
       perc_sole = round(perc_sole, 2)
       pixel_sole = (tot_pixel_sole * perc_sole) / 100
-      pixel_sole =  round(pixel_sole)
+      pixel_sole =  round(pixel_sole) -1
       print ("perc sole -->", perc_sole)
       print("pixel sole -->", pixel_sole)
       
@@ -160,7 +160,7 @@ while True:
          pixels[pixel_sole - 1] = (255, 255, 25)
          pixels.show()   
 
-      if (20<= pixel_sole <= 27):
+      if (20<= pixel_sole <= 26):
 
          pixels.brightness = 0.25
 
@@ -174,7 +174,7 @@ while True:
          pixels[pixel_sole - 1] = (255, 255, 25)
          pixels.show()      
  
-      if (pixel_sole == 28):
+      if (pixel_sole == 27):
 
          pixels.brightness = 0.18
          
@@ -203,7 +203,7 @@ while True:
          
          pixels.show()
 
-      if (pixel_sole == 29):
+      if (pixel_sole == 28):
 
          pixels.brightness = 0.15
 
@@ -226,10 +226,10 @@ while True:
          
          pixels.show()
 
-      if (pixel_sole == 30):
+      if (pixel_sole == 29):
 
          pixels.brightness = 0.12
-
+         
          for i in range(tot_pixel_sole):
             pixels[i] = TRAMONTO_16
             #pixels.show()
@@ -240,9 +240,10 @@ while True:
          pixels[pixel_sole - 3] = TRAMONTO_11
          pixels[pixel_sole - 4] = TRAMONTO_12
          pixels[pixel_sole - 5] = TRAMONTO_13
-         pixels[pixel_sole - 6] = TRAMONTO_15
-         #pixels[pixel_sole - 7] = TRAMONTO_14
-         #pixels[pixel_sole - 8] = TRAMONTO_15
+         pixels[pixel_sole - 6] = TRAMONTO_14
+         pixels[pixel_sole - 7] = TRAMONTO_15
+         pixels[pixel_sole - 8] = TRAMONTO_15
+         #pixels[pixel_sole - 9] = TRAMONTO_16
          
          pixels.show()
       
@@ -253,7 +254,7 @@ while True:
       perc_luna = (delta_luna / delta_tot_luna) * 100
       perc_luna = round(perc_luna, 2)
       pixel_luna = (tot_pixel_luna * perc_luna) / 100 + 30
-      pixel_luna =  round(pixel_luna) - 1
+      pixel_luna =  round(pixel_luna)
       fase_luna = moon.phase(datetime.now())
       print("pixel luna -->", pixel_luna)
       print ("perc luna -->", perc_luna)
