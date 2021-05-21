@@ -8,15 +8,15 @@ import neopixel
 
 # INIZIALIZZO I LED
 pixel_pin = board.D12
-num_pixels = 60
+num_pixels = 96
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.15, auto_write=False,pixel_order=neopixel.RGB)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.20, auto_write=False,pixel_order=neopixel.GRB)
 
 # COLORI
 OFF = (0,0,0)
 
 CIELO_AZZURRO = (10, 27, 33)
-CIELO_AZZURRO_1 = (15, 40, 50)
+CIELO_AZZURRO_1 = (20, 45, 55)
 CIELO_TRAMONTO = (30, 10, 3)
 CIELO_ALBA = (80, 25, 9)
 CIELO_LUNA = (0, 0, 7)
@@ -89,34 +89,44 @@ def getDuration(then, now = datetime.now(), interval = "default"):
 
 while True:
    # QUASI QUASI TANTO VALE DEFINIRE UN TOT_PIXEL TANTO è SEMPRE 30
-   tot_pixel_sole = 30
-   tot_pixel_luna = 30
+   tot_pixel_sole = 96
+   tot_pixel_luna = 96
 
    s = sun(city.observer, date=datetime.now(), tzinfo=city.timezone)
    alba = s["sunrise"]
+   aurora = s["dawn"]
    tramonto = s["sunset"]
+   crepuscolo = s["dusk"]
 
-   delta_tot_sole = getDuration(alba, tramonto, 'minutes')
+   delta_tot_sole = getDuration(aurora, crepuscolo, 'minutes')
    adesso = datetime.now(pytz.timezone('Europe/Rome'))
+
+   print("alba -->",alba)
+   print("aurora -->",aurora)
+   print("tramonto -->",tramonto)
+   print("crepuscolo -->",crepuscolo)
+   print("delta sole tot -->",delta_tot_sole)
+   print("adesso -->",adesso)
    
    # RESET LEDs
    pixels.fill(OFF)
    pixels.show()
 
    # CALCOLO A SECONDA DELLA FASE DEL GIORNO
-   if (alba <= adesso <= tramonto):
-      delta_sole = getDuration(alba, adesso, 'minutes')
+   if (aurora <= adesso <= crepuscolo):
+      delta_sole = getDuration(aurora, adesso, 'minutes')
       perc_sole = (delta_sole / delta_tot_sole) * 100
       perc_sole = round(perc_sole, 2)
       pixel_sole = (tot_pixel_sole * perc_sole) / 100
       pixel_sole =  round(pixel_sole) -1
-      print ("perc sole -->", perc_sole)
+      print("perc sole -->", perc_sole)
       print("pixel sole -->", pixel_sole)
+      print("----------------")
       
-      #pixels.fill(cielo)
-      #pixels.show()
-      #pixels[pixel_sole] = (255, 255, 0)
-      #pixels.show()
+      pixels.fill(CIELO_AZZURRO_1)
+      pixels.show()
+      pixels[pixel_sole] = (255, 255, 0)
+      pixels.show()
       
       #pixel_sole = 28
             
